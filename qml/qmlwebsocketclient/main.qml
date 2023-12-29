@@ -49,25 +49,23 @@ Rectangle {
         active: false
     }
 
-    Button {
-        text: socket.status == WebSocket.Open ? "Sending..." : "后退"
+    Column {
         anchors.centerIn: parent
-        onClicked: {
-            welcome1Clicked = true;
-            socket.active = !socket.active;
-        }
-    }
 
-    Button {
-        text: "前进"
-        anchors {
-            horizontalCenter: parent.horizontalCenter
-            top: messageBox.bottom
-            topMargin: 20
+        Button {
+            text: socket.status == WebSocket.Open ? "Sending..." : "后退"
+            onClicked: {
+                welcome1Clicked = true;
+                socket.active = !socket.active;
+            }
         }
-        onClicked: {
-            welcome2Clicked = true;
-            secureWebSocket.active = !secureWebSocket.active;
+
+        Button {
+            text: "前进"
+            onClicked: {
+                welcome2Clicked = true;
+                secureWebSocket.active = !secureWebSocket.active;
+            }
         }
     }
 
