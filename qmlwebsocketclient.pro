@@ -1,5 +1,4 @@
 QT += quick websockets
-
 TARGET = qmlwebsocketclient
 
 TEMPLATE = app
