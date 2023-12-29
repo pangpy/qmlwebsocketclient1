@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtWebSockets 1.0
+import QtQuick.Controls 2.15
 
 Rectangle {
     width: 640
@@ -19,7 +20,7 @@ Rectangle {
                 console.log("Error: " + socket.errorString)
             } else if (socket.status == WebSocket.Open) {
                 if (welcome1Clicked)
-                    socket.sendTextMessage("前进");
+                    socket.sendTextMessage("后退");
                 welcome1Clicked = false;
             } else if (socket.status == WebSocket.Closed) {
                 messageBox.text += "\nSocket closed"
@@ -39,7 +40,7 @@ Rectangle {
                 console.log("Error: " + secureWebSocket.errorString)
             } else if (secureWebSocket.status == WebSocket.Open) {
                 if (welcome2Clicked)
-                    secureWebSocket.sendTextMessage("后退");
+                    secureWebSocket.sendTextMessage("前进");
                 welcome2Clicked = false;
             } else if (secureWebSocket.status == WebSocket.Closed) {
                 messageBox.text += "\nSecure socket closed"
@@ -48,33 +49,30 @@ Rectangle {
         active: false
     }
 
-    Text {
-        id: messageBox
-        text: socket.status == WebSocket.Open ? qsTr("Sending...") : qsTr("前进")
+    Button {
+        text: socket.status == WebSocket.Open ? "Sending..." : "后退"
         anchors.centerIn: parent
-    }
-
-    MouseArea {
-        anchors.fill: parent
         onClicked: {
             welcome1Clicked = true;
             socket.active = !socket.active;
         }
     }
 
-    Text {
-        text: "后退"
+    Button {
+        text: "前进"
         anchors {
             horizontalCenter: parent.horizontalCenter
             top: messageBox.bottom
             topMargin: 20
         }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                welcome2Clicked = true;
-                secureWebSocket.active = !secureWebSocket.active;
-            }
+        onClicked: {
+            welcome2Clicked = true;
+            secureWebSocket.active = !secureWebSocket.active;
         }
+    }
+
+    Text {
+        id: messageBox
+        visible: false
     }
 }
